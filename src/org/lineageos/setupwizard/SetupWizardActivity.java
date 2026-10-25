@@ -32,6 +32,14 @@ public class SetupWizardActivity extends AppCompatActivity {
         if (LOGV) {
             Log.v(TAG, "onCreate savedInstanceState=" + savedInstanceState);
         }
+        if (SetupWizardUtils.shouldSkipSetup(this)) {
+            SetupWizardUtils.disableHome(this);
+            if (SetupWizardApp.getStatusBarManager() != null) {
+                SetupWizardUtils.enableStatusBar();
+            }
+            finish();
+            return;
+        }
         if (SetupWizardUtils.hasLeanback(this) && SetupWizardUtils.hasGMS(this)) {
             finish();
             return;
@@ -39,6 +47,7 @@ public class SetupWizardActivity extends AppCompatActivity {
         SetupWizardUtils.enableComponent(this, WizardManager.class);
         Intent intent = new Intent(ACTION_LOAD);
         Bundle wizardBundle = new Bundle();
+        wizardBundle.putBoolean(PetalSetup.KEY_USE_PETAL, PetalSetup.isEnabled(this));
         if (SetupWizardUtils.isOwner()) {
             wizardBundle.putString(EXTRA_SCRIPT_URI, getString(R.string.lineage_wizard_script_uri));
         } else if (SetupWizardUtils.isManagedProfile(this)) {

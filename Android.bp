@@ -31,3 +31,20 @@ android_app {
 
     libs: ["telephony-common"],
 }
+
+android_test {
+    name: "PetalBackupAvailabilityTests",
+    srcs: [
+        "src/org/lineageos/setupwizard/backup/PetalBackupRestore.java",
+        "tests/src/**/*.java",
+    ],
+    // android_test defaults to the package's res/ directory; these checks need
+    // no resources and must not inherit the wizard's setupdesign theme deps.
+    resource_dirs: [],
+    manifest: "tests/AndroidManifest.xml",
+    platform_apis: true,
+    min_sdk_version: "35",
+    libs: ["android.test.mock.stubs.system"],
+    certificate: "platform",
+    test_suites: ["device-tests"],
+}

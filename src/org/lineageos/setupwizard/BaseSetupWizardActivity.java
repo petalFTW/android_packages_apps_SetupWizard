@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
@@ -49,6 +50,7 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
     public static final int DEFAULT_TRANSITION = TransitionHelper.TRANSITION_FADE_THROUGH;
 
     private NavigationLayout mNavigationBar;
+    private boolean mUsePetalPresentation;
 
     private ActivityResultLauncher<Intent> mNextIntentResultLauncher;
 
@@ -56,6 +58,10 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         if (LOGV) {
             logActivityState("onCreate savedInstanceState=" + savedInstanceState);
+        }
+        mUsePetalPresentation = PetalSetup.isEnabled(this);
+        if (mUsePetalPresentation) {
+            setTheme(R.style.Theme_Setup_Petal);
         }
         super.onCreate(savedInstanceState);
         mNextIntentResultLauncher = registerForActivityResult(
@@ -69,6 +75,8 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                if (mUsePetalPresentation
+                        && BaseSetupWizardActivity.this instanceof WelcomeActivity) return;
                 if (LOGV) {
                     Log.v(TAG, "handleOnBackPressed()");
                 }
@@ -215,6 +223,15 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
         onSkipPressed();
     }
 
+    @Override
+    public void onNavigateBack() {
+        getOnBackPressedDispatcher().onBackPressed();
+    }
+
+    protected final boolean isPetalSetup() {
+        return mUsePetalPresentation;
+    }
+
     protected final void onSetupStart() {
         if (SetupWizardUtils.isOwner()) {
             tryEnablingWifi();
@@ -302,14 +319,38 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
     }
 
     private void initLayout() {
-        if (getLayoutResId() != -1) {
-            setContentView(getLayoutResId());
+        int layoutRes = getLayoutResId();
+        if (mUsePetalPresentation) {
+            if (layoutRes == R.layout.welcome_activity) layoutRes = R.layout.petal_welcome_activity;
+            else if (layoutRes == R.layout.finish_activity) layoutRes = R.layout.petal_finish_activity;
+        }
+        if (layoutRes != -1) {
+            setContentView(layoutRes);
         }
         if (getTitleResId() != -1) {
             final CharSequence headerText = TextUtils.expandTemplate(getText(getTitleResId()));
             getGlifLayout().setHeaderText(headerText);
         }
-        if (getIconResId() != -1) {
+        if (mUsePetalPresentation) {
+            View view = findViewById(R.id.setup_wizard_layout);
+            if (view instanceof GlifLayout) {
+                GlifLayout layout = (GlifLayout) view;
+                layout.setBackgroundPatterned(false);
+                layout.setBackgroundBaseColor(android.content.res.ColorStateList.valueOf(
+                        getColor(R.color.petal_setup_surface)));
+                layout.setIcon(getDrawable(R.drawable.petal_setup_logo));
+                TextView header = layout.getHeaderTextView();
+                if (header != null) {
+                    header.setTextSize(32);
+                    header.setTextColor(getColor(R.color.petal_setup_text));
+                }
+                TextView description = layout.getDescriptionTextView();
+                if (description != null) {
+                    description.setTextSize(14);
+                    description.setTextColor(getColor(R.color.petal_setup_secondary));
+                }
+            }
+        } else if (getIconResId() != -1) {
             final GlifLayout layout = getGlifLayout();
             final Drawable icon = getDrawable(getIconResId()).mutate();
             icon.setTintList(Utils.getColorAccent(layout.getContext()));
@@ -334,12 +375,24 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
     }
 
     protected void applyForwardTransition() {
-        TransitionHelper.applyForwardTransition(this, DEFAULT_TRANSITION, true);
+        if (mUsePetalPresentation) {
+            overrideActivityTransition(OVERRIDE_TRANSITION_OPEN,
+                    R.anim.petal_slide_enter, R.anim.petal_slide_exit);
+            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE,
+                    R.anim.petal_slide_back_enter, R.anim.petal_slide_back_exit);
+        } else {
+            TransitionHelper.applyForwardTransition(this, DEFAULT_TRANSITION, true);
+        }
     }
 
     protected void applyBackwardTransition() {
-        TransitionHelper.applyBackwardTransition(BaseSetupWizardActivity.this,
-                DEFAULT_TRANSITION, true);
+        if (mUsePetalPresentation) {
+            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE,
+                    R.anim.petal_slide_back_enter, R.anim.petal_slide_back_exit);
+        } else {
+            TransitionHelper.applyBackwardTransition(BaseSetupWizardActivity.this,
+                    DEFAULT_TRANSITION, true);
+        }
     }
 
     protected final class StartDecoratedActivityForResult

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2026 petalOS; SPDX-License-Identifier: Apache-2.0 -->
+<resources>
+    <string name="petal_intro_restore_title">Restore a Petal backup</string>
+    <string name="petal_intro_restore_subtitle">If you have a Petal Backup file, you can restore your files now or skip this step.</string>
+</resources>

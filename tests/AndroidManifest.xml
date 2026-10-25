@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2026 petalOS; SPDX-License-Identifier: Apache-2.0 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.setupwizard.backup.tests">
+    <application android:label="PetalBackup availability tests">
+        <uses-library android:name="android.test.mock" />
+    </application>
+    <instrumentation
+        android:name="org.lineageos.setupwizard.backup.AvailabilityInstrumentation"
+        android:targetPackage="org.lineageos.setupwizard.backup.tests" />
+</manifest>

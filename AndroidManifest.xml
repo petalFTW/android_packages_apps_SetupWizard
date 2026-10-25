@@ -46,6 +46,11 @@
         android:name="org.lineageos.setupwizard.SETUP_FINISHED"
         android:permission="lineageos.permission.FINISH_SETUP" />
 
+    <queries>
+        <package android:name="org.petal.backup" />
+        <package android:name="org.petal.backup.dev" />
+    </queries>
+
     <application
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"

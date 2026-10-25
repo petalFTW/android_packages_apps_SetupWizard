@@ -111,6 +111,12 @@ public class SetupWizardUtils {
         return context.getSystemService(UserManager.class).isManagedProfile();
     }
 
+    public static boolean shouldSkipSetup(Context context) {
+        // Device-wide provisioning doesn't tell us whether this user finished.
+        return !isManagedProfile(context) && Settings.Secure.getInt(context.getContentResolver(),
+                Settings.Secure.USER_SETUP_COMPLETE, 0) != 0;
+    }
+
     public static StatusBarManager disableStatusBar(Context context) {
         StatusBarManager statusBarManager = context.getSystemService(StatusBarManager.class);
         if (statusBarManager != null) {

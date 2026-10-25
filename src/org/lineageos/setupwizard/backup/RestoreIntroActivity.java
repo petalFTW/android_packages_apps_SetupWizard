@@ -7,8 +7,7 @@
 package org.lineageos.setupwizard.backup;
 
 import static com.google.android.setupcompat.util.ResultCodes.RESULT_ACTIVITY_NOT_FOUND;
-
-import static org.lineageos.setupwizard.SetupWizardApp.ACTION_RESTORE_FROM_BACKUP;
+import static com.google.android.setupcompat.util.ResultCodes.RESULT_SKIP;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,8 +22,16 @@ public class RestoreIntroActivity extends SubBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getGlifLayout().setDescriptionText(getString(R.string.intro_restore_subtitle,
-                getString(R.string.os_name)));
+        if (isFinishing()) return;
+        getGlifLayout().setDescriptionText(R.string.petal_intro_restore_subtitle);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isFinishing() && PetalBackupRestore.findRestoreIntent(this) == null) {
+            finishAction(RESULT_SKIP);
+        }
     }
 
     @Override
@@ -42,6 +49,10 @@ public class RestoreIntroActivity extends SubBaseActivity {
 
     @Override
     protected void onStartSubactivity() {
+        if (PetalBackupRestore.findRestoreIntent(this) == null) {
+            finishAction(RESULT_SKIP);
+            return;
+        }
         setNextAllowed(true);
     }
 
@@ -57,7 +68,7 @@ public class RestoreIntroActivity extends SubBaseActivity {
 
     @Override
     protected int getTitleResId() {
-        return R.string.intro_restore_title;
+        return R.string.petal_intro_restore_title;
     }
 
     @Override
@@ -66,8 +77,16 @@ public class RestoreIntroActivity extends SubBaseActivity {
     }
 
     private void launchRestore() {
-        Intent intent = new Intent(ACTION_RESTORE_FROM_BACKUP);
-        startSubactivity(intent);
+        Intent intent = PetalBackupRestore.findRestoreIntent(this);
+        if (intent == null) {
+            finishAction(RESULT_SKIP);
+            return;
+        }
+        try {
+            startSubactivity(intent);
+        } catch (SecurityException unavailable) {
+            finishAction(RESULT_SKIP);
+        }
     }
 
 }

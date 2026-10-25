@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2026 petalOS; SPDX-License-Identifier: Apache-2.0 -->
+<resources>
+    <bool name="petal_setup_light_bars">false</bool>
+    <color name="petal_setup_surface">#111318</color>
+    <color name="petal_setup_text">#F3F4F7</color>
+    <color name="petal_setup_secondary">#A5ABB7</color>
+    <color name="petal_setup_muted_surface">#20242C</color>
+</resources>

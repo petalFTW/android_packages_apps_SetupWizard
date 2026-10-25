@@ -26,6 +26,7 @@ import android.util.Log;
 import com.google.android.setupcompat.util.ResultCodes;
 
 import org.lineageos.setupwizard.util.SetupWizardUtils;
+import org.lineageos.setupwizard.PetalSetup;
 
 import java.util.HashMap;
 
@@ -85,6 +86,7 @@ public class WizardManager extends Activity {
         }
 
         Bundle wizardBundle = new Bundle();
+        PetalSetup.copySelection(extras, wizardBundle);
         wizardBundle.putString(EXTRA_SCRIPT_URI, scriptUri);
         wizardBundle.putString(EXTRA_ACTION_ID, action.getId());
         intent.putExtra(EXTRA_WIZARD_BUNDLE, wizardBundle);
