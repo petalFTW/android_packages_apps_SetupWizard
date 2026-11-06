@@ -1,47 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2026 petalOS; SPDX-License-Identifier: Apache-2.0 -->
+<!-- Colours are the roles in vendor/petal/docs/DESIGN_GUIDANCE.md; bloom stops are the site's. -->
 <resources>
     <bool name="config_use_petal_setup">true</bool>
     <bool name="petal_setup_light_bars">true</bool>
-    <color name="petal_setup_surface">#FFFFFF</color>
-    <color name="petal_setup_text">#17191D</color>
-    <color name="petal_setup_secondary">#727781</color>
-    <color name="petal_setup_muted_surface">#F6F7F9</color>
-    <color name="petal_setup_accent">#0969F6</color>
-    <string name="petal_hello">Hello</string>
-    <string name="petal_welcome">Welcome to petalOS</string>
+    <color name="petal_setup_surface">#F6F6FA</color>
+    <color name="petal_setup_text">#171921</color>
+    <color name="petal_setup_secondary">#646A79</color>
+    <color name="petal_setup_muted_surface">#FCFCFF</color>
+    <color name="petal_setup_outline">#1F171921</color>
+    <color name="petal_setup_accent">#6844D6</color>
+    <color name="petal_setup_accent_container">#ECE7FF</color>
+    <color name="petal_setup_on_accent">#FFFFFF</color>
+    <color name="petal_setup_disabled">#1F171921</color>
+    <color name="petal_setup_on_disabled">#646A79</color>
+    <color name="petal_setup_ripple">#336844D6</color>
+    <color name="petal_bloom_line">#6938EF</color>
+    <color name="petal_step_top">#B79BFF</color>
+    <color name="petal_step_bottom">#6844D6</color>
+    <color name="petal_step_todo">#66646A79</color>
+    <array name="petal_bloom_back">
+        <item>#BCA6FF</item><item>#DCD0FF</item><item>#EFE8FF</item>
+    </array>
+    <array name="petal_bloom_middle">
+        <item>#FFB3D9</item><item>#CDB8FF</item><item>#E8DEFF</item>
+    </array>
+    <array name="petal_bloom_front">
+        <item>#7C4DFF</item><item>#B79BFF</item><item>#E9C6E6</item>
+    </array>
+    <dimen name="petal_app_icon">40dp</dimen>
+    <dimen name="petal_step_mark_height">30dp</dimen>
+    <declare-styleable name="PetalBloomView">
+        <attr name="petalSpread" format="float" />
+        <attr name="petalReach" format="float" />
+    </declare-styleable>
+    <string name="petal_wizard_script_uri" translatable="false">android.resource://org.lineageos.setupwizard/raw/petal_wizard_script</string>
+    <string name="petal_welcome_title">Welcome to petalOS.</string>
+    <string name="petal_welcome_line">Your phone, the way it should have shipped.</string>
+    <string name="petal_welcome_steps">Seven quick steps: language, connection, privacy and apps. Then it’s yours.</string>
+    <string name="petal_get_started">Get started</string>
     <string name="petal_wordmark" translatable="false">petalOS</string>
     <string name="petal_back">Back</string>
-    <string name="petal_ready">You’re all set.</string>
-    <string name="petal_welcome_home">Welcome to\npetalOS</string>
+    <string name="petal_step_of">Step %1$d of %2$d</string>
+    <string name="petal_ready">Theme, gestures and everything else are in Settings whenever you want them.</string>
+    <string name="petal_welcome_home">Off you go.</string>
+    <string name="petal_finish">Go to home screen</string>
+    <string name="petal_finish_microg">When you’re ready for microG, the official downloads are linked in petalOS Hub, under Google Play and microG.</string>
+    <string name="petal_continue_without">Continue without it</string>
+    <string name="petal_services_title">Google services</string>
+    <string name="petal_services_summary">petalOS doesn’t come with Google built in. Choose how apps that expect Google should work. You can change this later in petalOS Hub.</string>
+    <string name="petal_services_google">Google Play</string>
+    <string name="petal_services_google_summary">Install the Play Store and Play services bundled with petalOS. They run as ordinary, sandboxed apps.</string>
+    <string name="petal_services_microg">microG</string>
+    <string name="petal_services_microg_summary">Install nothing now. Download this lighter, open-source alternative yourself later.</string>
+    <string name="petal_services_installing">Installing Google Play. This can take a minute or two.</string>
+    <string name="petal_services_failed">Google Play didn’t install. You can carry on and try again later in petalOS Hub.</string>
+    <string name="petal_apps_title">App Center</string>
+    <string name="petal_apps_summary">Optional petalOS apps. Tick any you want now, or add them later in petalOS Hub.</string>
+    <string name="petal_apps_install">Install and continue</string>
+    <string name="petal_apps_installing">Installing your apps. This can take a minute.</string>
+    <string name="petal_apps_failed">Those apps didn’t install. You can carry on and add them later in petalOS Hub.</string>
+    <string name="petal_app_assistant_title">Petal Assistant</string>
+    <string name="petal_app_tuner_title">PetalTuner</string>
+    <string name="petal_app_idhelper_title">petal IDHelper</string>
+    <string name="petal_app_assistant">A voice and text assistant whose language model runs on the phone.</string>
+    <string name="petal_app_tuner">Bypass charging, charge limits, thermal limits and a distraction-free game mode.</string>
+    <string name="petal_app_idhelper">Local avatar preview and privacy-camera controls.</string>
 
     <style name="Theme.Setup.Petal" parent="Theme.Setup">
         <item name="sucUsePartnerResource">false</item>
         <item name="sudUsePartnerHeavyTheme">false</item>
         <item name="android:windowBackground">@color/petal_setup_surface</item>
         <item name="android:colorBackground">@color/petal_setup_surface</item>
+        <item name="android:colorPrimary">@color/petal_setup_accent</item>
+        <item name="colorPrimary">@color/petal_setup_accent</item>
         <item name="android:colorAccent">@color/petal_setup_accent</item>
         <item name="colorAccent">@color/petal_setup_accent</item>
+        <item name="android:colorControlActivated">@color/petal_setup_accent</item>
         <item name="android:textColorPrimary">@color/petal_setup_text</item>
         <item name="android:textColorSecondary">@color/petal_setup_secondary</item>
-        <item name="android:statusBarColor">@color/petal_setup_surface</item>
-        <item name="android:navigationBarColor">@color/petal_setup_surface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">@bool/petal_setup_light_bars</item>
         <item name="android:windowLightNavigationBar">@bool/petal_setup_light_bars</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/petal_sans</item>
+        <item name="fontFamily">@font/petal_sans</item>
     </style>
 
     <style name="PetalPrimaryButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/petal_button_primary</item>
         <item name="android:backgroundTint">@null</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/petal_button_text</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textFontWeight">500</item>
         <item name="android:stateListAnimator">@null</item>
-        <item name="android:padding">0dp</item>
+        <item name="android:paddingHorizontal">20dp</item>
+        <item name="android:paddingVertical">12dp</item>
         <item name="android:minWidth">0dp</item>
-        <item name="android:minHeight">50dp</item>
+        <item name="android:minHeight">52dp</item>
     </style>
     <style name="PetalSecondaryButton" parent="PetalPrimaryButton">
         <item name="android:background">@drawable/petal_button_secondary</item>
@@ -49,9 +106,45 @@
     </style>
     <style name="PetalTextButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/petal_setup_secondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textColor">@color/petal_setup_text</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:minWidth">0dp</item>
+    </style>
+    <!-- The indicator is a drawable so it takes the row's padding like the text does. -->
+    <style name="PetalChoiceRow">
+        <item name="android:background">@drawable/petal_choice_row</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawableStart">?android:attr/listChoiceIndicatorSingle</item>
+        <item name="android:drawableTint">@color/petal_setup_accent</item>
+        <item name="android:drawablePadding">16dp</item>
+        <item name="android:minHeight">72dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingVertical">14dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineHeight">21sp</item>
+        <item name="android:textColor">@color/petal_setup_text</item>
+    </style>
+    <style name="PetalCheckRow" parent="PetalChoiceRow">
+        <item name="android:drawableStart">?android:attr/listChoiceIndicatorMultiple</item>
+    </style>
+    <style name="PetalHeroTitle">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textFontWeight">800</item>
+        <item name="android:lineHeight">46sp</item>
+        <item name="android:letterSpacing">-0.015</item>
+        <item name="android:textColor">@color/petal_setup_text</item>
+    </style>
+    <style name="PetalHeroLine">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineHeight">26sp</item>
+        <item name="android:textColor">@color/petal_setup_text</item>
+    </style>
+    <style name="PetalHeroNote">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineHeight">22sp</item>
+        <item name="android:textColor">@color/petal_setup_secondary</item>
     </style>
 </resources>

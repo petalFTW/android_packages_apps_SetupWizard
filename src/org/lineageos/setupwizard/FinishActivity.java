@@ -28,10 +28,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.setupcompat.util.SystemBarHelper;
 
 import org.lineageos.setupwizard.util.SetupWizardUtils;
+import org.lineageos.setupwizard.widget.PetalBloomView;
 
 public class FinishActivity extends BaseSetupWizardActivity {
 
     public static final String TAG = FinishActivity.class.getSimpleName();
+
+    private static final long PETAL_FADE_MS = 700;
 
     private final Handler mHandler = new Handler(Looper.getMainLooper());
 
@@ -61,7 +64,11 @@ public class FinishActivity extends BaseSetupWizardActivity {
         if (LOGV) {
             logActivityState("onCreate savedInstanceState=" + savedInstanceState);
         }
-        setNextText(R.string.start);
+        setNextText(isPetalSetup() ? R.string.petal_finish : R.string.start);
+        if (isPetalSetup() && "microg".equals(SetupWizardApp.getSettingsBundle()
+                .getString(PetalServicesActivity.KEY_PROVIDER))) {
+            findViewById(R.id.petal_finish_hint).setVisibility(View.VISIBLE);
+        }
 
         // Edge-to-edge. Needed for the background view to fill the full screen.
         final Window window = getWindow();
@@ -86,6 +93,10 @@ public class FinishActivity extends BaseSetupWizardActivity {
 
         if (sFinishState != FinishState.NONE) {
             disableNavigation();
+            if (isPetalSetup()) {
+                ((PetalBloomView) findViewById(R.id.petal_finish_bloom)).skipEntrance();
+                findViewById(R.id.navbar_back).setVisibility(View.INVISIBLE);
+            }
         }
 
         switch (sFinishState) {
@@ -196,6 +207,14 @@ public class FinishActivity extends BaseSetupWizardActivity {
     private void animateOut() {
         if (sFinishState != FinishState.ANIMATING) {
             Log.e(TAG, "animateOut but in " + sFinishState + " phase. How?");
+            return;
+        }
+        if (isPetalSetup()) {
+            // Fades into the wallpaper already behind this window.
+            mRootView.animate().alpha(0f).setDuration(PETAL_FADE_MS).withEndAction(() -> {
+                mRootView.setVisibility(View.INVISIBLE);
+                mHandler.post(this::finishAfterAnimation);
+            }).start();
             return;
         }
         final int cx = (mRootView.getLeft() + mRootView.getRight()) / 2;

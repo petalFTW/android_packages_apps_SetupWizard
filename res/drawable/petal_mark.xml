@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2026 petalOS; SPDX-License-Identifier: Apache-2.0 -->
+<!-- The First Bloom mark, from assets/logo.svg. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="36dp" android:height="28dp"
+    android:viewportWidth="920" android:viewportHeight="720">
+    <group android:translateX="-40" android:translateY="-100">
+        <path android:pathData="M500,772C480,655 432,539 395,467C349,375 372,294 402,238C433,181 480,132 492,122C497,117 503,117 508,122C520,132 567,181 598,238C628,294 651,375 605,467C568,539 520,655 500,772Z">
+            <aapt:attr name="android:fillColor"><gradient android:type="linear"
+                android:startX="500" android:startY="120" android:endX="500" android:endY="800"
+                android:startColor="@color/petal_step_top" android:endColor="@color/petal_step_bottom" /></aapt:attr>
+        </path>
+        <path android:pathData="M485,800C428,744 389,716 311,679C213,634 169,596 131,511C107,455 91,414 61,374C48,357 53,348 75,343C174,320 285,374 363,464C433,545 469,678 485,800Z">
+            <aapt:attr name="android:fillColor"><gradient android:type="linear"
+                android:startX="500" android:startY="120" android:endX="500" android:endY="800"
+                android:startColor="@color/petal_step_top" android:endColor="@color/petal_step_bottom" /></aapt:attr>
+        </path>
+        <path android:pathData="M515,800C572,744 611,716 689,679C787,634 831,596 869,511C893,455 909,414 939,374C952,357 947,348 925,343C826,320 715,374 637,464C567,545 531,678 515,800Z">
+            <aapt:attr name="android:fillColor"><gradient android:type="linear"
+                android:startX="500" android:startY="120" android:endX="500" android:endY="800"
+                android:startColor="@color/petal_step_top" android:endColor="@color/petal_step_bottom" /></aapt:attr>
+        </path>
+    </group>
+</vector>

@@ -2,8 +2,28 @@
 <!-- Copyright (C) 2026 petalOS; SPDX-License-Identifier: Apache-2.0 -->
 <resources>
     <bool name="petal_setup_light_bars">false</bool>
-    <color name="petal_setup_surface">#111318</color>
-    <color name="petal_setup_text">#F3F4F7</color>
-    <color name="petal_setup_secondary">#A5ABB7</color>
-    <color name="petal_setup_muted_surface">#20242C</color>
+    <color name="petal_setup_surface">#0A0B10</color>
+    <color name="petal_setup_text">#F5F5F8</color>
+    <color name="petal_setup_secondary">#B9BAC4</color>
+    <color name="petal_setup_muted_surface">#191B23</color>
+    <color name="petal_setup_outline">#33FFFFFF</color>
+    <color name="petal_setup_accent">#B9A5FF</color>
+    <color name="petal_setup_accent_container">#3B3156</color>
+    <color name="petal_setup_on_accent">#140E2B</color>
+    <color name="petal_setup_disabled">#33FFFFFF</color>
+    <color name="petal_setup_on_disabled">#B9BAC4</color>
+    <color name="petal_setup_ripple">#33140E2B</color>
+    <color name="petal_bloom_line">#CDBEFF</color>
+    <color name="petal_step_top">#F5DCEB</color>
+    <color name="petal_step_bottom">#AF98D4</color>
+    <color name="petal_step_todo">#66B9BAC4</color>
+    <array name="petal_bloom_back">
+        <item>#6B4BE0</item><item>#3A2AA0</item><item>#2A1F7A</item>
+    </array>
+    <array name="petal_bloom_middle">
+        <item>#A274F2</item><item>#5E43C8</item><item>#4A36AE</item>
+    </array>
+    <array name="petal_bloom_front">
+        <item>#FFD9EC</item><item>#C39DF0</item><item>#8A6FD0</item>
+    </array>
 </resources>

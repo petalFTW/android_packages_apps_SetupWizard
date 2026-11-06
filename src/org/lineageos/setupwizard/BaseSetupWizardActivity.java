@@ -23,9 +23,9 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
@@ -75,7 +75,7 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (mUsePetalPresentation
+                if (isBusy() || mUsePetalPresentation
                         && BaseSetupWizardActivity.this instanceof WelcomeActivity) return;
                 if (LOGV) {
                     Log.v(TAG, "handleOnBackPressed()");
@@ -228,6 +228,11 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
         getOnBackPressedDispatcher().onBackPressed();
     }
 
+    /** True while this page is doing work that going back would abandon. */
+    protected boolean isBusy() {
+        return false;
+    }
+
     protected final boolean isPetalSetup() {
         return mUsePetalPresentation;
     }
@@ -325,31 +330,21 @@ public abstract class BaseSetupWizardActivity extends AppCompatActivity implemen
             else if (layoutRes == R.layout.finish_activity) layoutRes = R.layout.petal_finish_activity;
         }
         if (layoutRes != -1) {
-            setContentView(layoutRes);
+            try {
+                setContentView(layoutRes);
+            } catch (InflateException e) {
+                // The look must never be what stops setup: drop back to Lineage's own screen.
+                Log.e(TAG, "Petal layout failed, using stock", e);
+                mUsePetalPresentation = false;
+                setContentView(getLayoutResId());
+            }
         }
         if (getTitleResId() != -1) {
             final CharSequence headerText = TextUtils.expandTemplate(getText(getTitleResId()));
             getGlifLayout().setHeaderText(headerText);
         }
         if (mUsePetalPresentation) {
-            View view = findViewById(R.id.setup_wizard_layout);
-            if (view instanceof GlifLayout) {
-                GlifLayout layout = (GlifLayout) view;
-                layout.setBackgroundPatterned(false);
-                layout.setBackgroundBaseColor(android.content.res.ColorStateList.valueOf(
-                        getColor(R.color.petal_setup_surface)));
-                layout.setIcon(getDrawable(R.drawable.petal_setup_logo));
-                TextView header = layout.getHeaderTextView();
-                if (header != null) {
-                    header.setTextSize(32);
-                    header.setTextColor(getColor(R.color.petal_setup_text));
-                }
-                TextView description = layout.getDescriptionTextView();
-                if (description != null) {
-                    description.setTextSize(14);
-                    description.setTextColor(getColor(R.color.petal_setup_secondary));
-                }
-            }
+            PetalSetup.dressPage(this);
         } else if (getIconResId() != -1) {
             final GlifLayout layout = getGlifLayout();
             final Drawable icon = getDrawable(getIconResId()).mutate();

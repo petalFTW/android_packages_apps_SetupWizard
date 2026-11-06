@@ -49,7 +49,8 @@ public class SetupWizardActivity extends AppCompatActivity {
         Bundle wizardBundle = new Bundle();
         wizardBundle.putBoolean(PetalSetup.KEY_USE_PETAL, PetalSetup.isEnabled(this));
         if (SetupWizardUtils.isOwner()) {
-            wizardBundle.putString(EXTRA_SCRIPT_URI, getString(R.string.lineage_wizard_script_uri));
+            wizardBundle.putString(EXTRA_SCRIPT_URI, getString(PetalSetup.isEnabled(this)
+                    ? R.string.petal_wizard_script_uri : R.string.lineage_wizard_script_uri));
         } else if (SetupWizardUtils.isManagedProfile(this)) {
             wizardBundle.putString(EXTRA_SCRIPT_URI,
                     getString(R.string.lineage_wizard_script_managed_profile_uri));

@@ -172,6 +172,32 @@
         </activity>
 
         <activity
+            android:name=".PetalServicesActivity"
+            android:label="@string/activity_label_empty"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboardHidden"
+            android:immersive="true"
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="org.lineageos.setupwizard.PETAL_SERVICES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PetalAppsActivity"
+            android:label="@string/activity_label_empty"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboardHidden"
+            android:immersive="true"
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="org.lineageos.setupwizard.PETAL_APPS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".LocationSettingsActivity"
             android:label="@string/activity_label_empty"
             android:configChanges="mcc|mnc"

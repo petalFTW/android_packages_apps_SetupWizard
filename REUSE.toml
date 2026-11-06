@@ -11,3 +11,9 @@ path = ["res/raw/lottie_system_nav_3_button.json", "res/raw/lottie_system_nav_fu
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2019 The Android Open Source Project"
 SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = ["res/font/petal_commissioner.ttf"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "The Commissioner Project Authors"
+SPDX-License-Identifier = "OFL-1.1"

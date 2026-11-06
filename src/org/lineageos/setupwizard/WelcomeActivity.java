@@ -49,17 +49,19 @@ public class WelcomeActivity extends SubBaseActivity {
 
         if (isPetalSetup()) {
             getWindow().setDecorFitsSystemWindows(false);
-            View root = findViewById(R.id.petal_welcome_root);
-            ViewCompat.setOnApplyWindowInsetsListener(root, (view, windowInsets) -> {
+            View content = findViewById(R.id.petal_welcome_content);
+            ViewCompat.setOnApplyWindowInsetsListener(content, (view, windowInsets) -> {
+                int side = view.getPaddingLeft();
                 Insets bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
                         | WindowInsetsCompat.Type.displayCutout());
-                view.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+                view.setPadding(side, bars.top, side, bars.bottom);
                 return WindowInsetsCompat.CONSUMED;
             });
-            ViewCompat.requestApplyInsets(root);
-            Button language = findViewById(R.id.petal_welcome_language);
-            language.setText(java.util.Locale.getDefault().getDisplayName());
-            language.setOnClickListener(view -> onNextPressed());
+            ViewCompat.requestApplyInsets(content);
+            // Other users' scripts are longer, so don't promise them seven steps.
+            if (PetalSetup.stepCount(this) == 0) {
+                findViewById(R.id.petal_welcome_steps).setVisibility(View.GONE);
+            }
         } else {
             FooterButtonStyleUtils.applyPrimaryButtonPartnerResource(this, startButton, true);
         }
@@ -81,7 +83,7 @@ public class WelcomeActivity extends SubBaseActivity {
             welcomeTitle.setText(getString(R.string.setup_managed_profile_welcome_message));
             if (isPetalSetup()) welcomeTitle.setTextSize(32);
         } else if (isPetalSetup()) {
-            welcomeTitle.setText(R.string.petal_hello);
+            welcomeTitle.setText(R.string.petal_welcome_title);
         } else {
             welcomeTitle.setText(getString(R.string.setup_welcome_message,
                     getString(R.string.os_name)));
