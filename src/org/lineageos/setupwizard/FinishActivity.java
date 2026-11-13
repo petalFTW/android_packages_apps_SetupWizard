@@ -65,8 +65,11 @@ public class FinishActivity extends BaseSetupWizardActivity {
             logActivityState("onCreate savedInstanceState=" + savedInstanceState);
         }
         setNextText(isPetalSetup() ? R.string.petal_finish : R.string.start);
-        if (isPetalSetup() && "microg".equals(SetupWizardApp.getSettingsBundle()
-                .getString(PetalServicesActivity.KEY_PROVIDER))) {
+        // download hint is only for official, petal microG is already on
+        Bundle petalBundle = SetupWizardApp.getSettingsBundle();
+        if (isPetalSetup() && "microg".equals(petalBundle.getString(PetalServicesActivity.KEY_PROVIDER))
+                && !PetalServicesActivity.FLAVOR_PETAL.equals(
+                        petalBundle.getString(PetalServicesActivity.KEY_MICROG_FLAVOR))) {
             findViewById(R.id.petal_finish_hint).setVisibility(View.VISIBLE);
         }
 

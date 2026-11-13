@@ -106,7 +106,8 @@ final class PetalInstaller {
                     }
                     parent.addChildSessionId(id);
                 }
-                if (packages.containsKey(PetalServicesActivity.PACKAGE_GMS)) {
+                // only google's bundle carries gsf, petal microG doesnt want the shim
+                if (packages.containsKey("com.google.android.gsf")) {
                     // Wake the shim before the freshly installed Google process starts.
                     mContext.getPackageManager().setApplicationEnabledSetting(
                             "app.grapheneos.gmscompat",
